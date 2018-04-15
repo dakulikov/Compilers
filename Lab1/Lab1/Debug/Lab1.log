@@ -1,7 +1,9 @@
-﻿  CSMemberOfPolynom.c
-  file_tab.c
-bison.simple(323): warning C4013: 'malloc' undefined; assuming extern returning int
-file.y(31): warning C4013: 'free' undefined; assuming extern returning int
+﻿  file_tab.c
+file.y(48): warning C4020: 'powPolyMember': too many actual parameters
+bison.simple(560): warning C4013: 'strlen' undefined; assuming extern returning int
+bison.simple(564): warning C4013: 'strcpy' undefined; assuming extern returning int
+bison.simple(573): warning C4013: 'strcat' undefined; assuming extern returning int
+file.y(54): warning C4013: 'PrintError' undefined; assuming extern returning int
   lex.yy.c
 lexic.l(8): warning C4010: single-line comment contains line-continuation character
 lexic.l(9): warning C4010: single-line comment contains line-continuation character
@@ -10,10 +12,5 @@ lexic.l(11): warning C4010: single-line comment contains line-continuation chara
 lexic.l(19): warning C4013: 'BeginToken' undefined; assuming extern returning int
 lex.yy.c(1242): warning C4996: 'fileno': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _fileno. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(2457): note: see declaration of 'fileno'
-  main.c
-d:\userdata\dkulikov\desktop\my\compilers\lab1\lab1\main.c(124): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1467): note: see declaration of 'vsprintf'
-d:\userdata\dkulikov\desktop\my\compilers\lab1\lab1\main.c(136): warning C4101: 'i': unreferenced local variable
-d:\userdata\dkulikov\desktop\my\compilers\lab1\lab1\main.c(261): warning C4098: 'main': 'void' function returning a value
   Generating Code...
-  Lab1.vcxproj -> D:\userdata\dkulikov\Desktop\My\Compilers\Lab1\Debug\Lab1.exe
+  Lab1.vcxproj -> D:\userdata\dkulikov\Desktop\Compilers\Lab1\Debug\Lab1.exe

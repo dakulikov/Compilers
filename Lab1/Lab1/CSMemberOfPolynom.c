@@ -8,8 +8,9 @@ void initMemberOfPolynom(struct SMemberOfPolynom* in,char liter,double constant)
 	in->coefficient = 1;
 	memset(in->literals, 0, SIZE * sizeof(char));
 	memset(in->powers, 0, SIZE * sizeof(double));
+	in->brackets = 0;
 	in->numLiter = 0;
-	printf("INIT ");
+	printf("INIT MEMBER =");
 	if (liter)
 	{
 		in->literals[0] = liter;
@@ -29,23 +30,39 @@ void initMemberOfPolynom(struct SMemberOfPolynom* in,char liter,double constant)
 struct SMemberOfPolynom * powPolyMember(struct SMemberOfPolynom* in, double power)
 {
 	printf("POW MEMBER ");
-	printf("%c^%0.0f\n", in->literals[in->numLiter-1],power);
-	if (in->numLiter != 0)
+	printMember(in);
+	printf("^%0.0f = ",power);
+	if (in->brackets == 0)
 	{
-		if (in->powers[in->numLiter - 1] != 1)
+		if (in->numLiter != 0)
 		{
-			in->powers[in->numLiter - 1] = pow(in->powers[in->numLiter - 1], power);
+			if (in->powers[in->numLiter - 1] != 1)
+			{
+				in->powers[in->numLiter - 1] = pow(in->powers[in->numLiter - 1], power);
+			}
+			else
+				in->powers[in->numLiter - 1] = power;
 		}
 		else
-			in->powers[in->numLiter - 1] = power;
-		printf("= %c^%0.0f", in->literals[in->numLiter - 1], in->powers[in->numLiter - 1]);
+		{
+			in->coefficient = pow(in->coefficient, power);
+		}
 	}
 	else
 	{
-		in->coefficient= pow(in->coefficient, power);
-		printf("= %0.0f\n", in->coefficient);
+		for (int i = 0; i < in->numLiter; i++)
+		{
+			if (in->powers[i] != 1)
+			{
+				in->powers[i] = pow(in->powers[i], power);
+			}
+			else
+				in->powers[i] = power;
+		}
+		in->coefficient = pow(in->coefficient, power);
 	}
-	
+	in->brackets = 0;
+	printMember(in);
 	return in;
 }
 
@@ -80,6 +97,8 @@ struct SMemberOfPolynom * mulMembers(struct SMemberOfPolynom* first, struct SMem
 		i++;
 	}
 	first->coefficient *= second->coefficient;
+	first->brackets = 0;
+	second->brackets = 0;
 	printf(" = ");
 	printMember(first);
 	printf("\n");

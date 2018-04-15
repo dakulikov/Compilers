@@ -7,15 +7,16 @@
 #define	CONST	258
 #define	VAR	259
 
-#line 2 "file.y"
+#line 1 "file.y"
 
 	#define alloca malloc
-	//#define YYERROR_VERBOSE 1
-	//#define YYDEBUG 1
+	#define YYERROR_VERBOSE 1
+	#define YYDEBUG 1
 	int yylex(void);
 	void yyerror(char*);
 	#include "stdio.h"
 	#include "SMemberOfPolynom.h"
+	#include "SExpressionOfPolynom.h"
 
 #line 13 "file.y"
 typedef union 
@@ -23,6 +24,7 @@ typedef union
 	double value;
 	char literal;
 	struct SMemberOfPolynom * polynomsMember;
+	struct SExpressionOfPolynom * polynomsExpression;
 } YYSTYPE;
 
 #ifndef YYLTYPE
@@ -51,23 +53,23 @@ typedef
 
 
 
-#define	YYFINAL		12
+#define	YYFINAL		26
 #define	YYFLAG		-32768
-#define	YYNTBASE	8
+#define	YYNTBASE	12
 
-#define YYTRANSLATE(x) ((unsigned)(x) <= 259 ? yytranslate[x] : 10)
+#define YYTRANSLATE(x) ((unsigned)(x) <= 259 ? yytranslate[x] : 15)
 
 static const char yytranslate[] = {     0,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     5,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,     8,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,     9,
+    10,     7,     6,     2,     5,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     6,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     7,     2,     2,     2,     2,     2,     2,
+     2,     2,     2,    11,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -88,64 +90,79 @@ static const char yytranslate[] = {     0,
 
 #if YYDEBUG != 0
 static const short yyprhs[] = {     0,
-     0,     3,     5,     7,    10,    14
+     0,     3,     5,     9,    13,    17,    21,    23,    25,    28,
+    32,    36
 };
 
-static const short yyrhs[] = {     9,
-     5,     0,     3,     0,     4,     0,     9,     9,     0,     9,
-     6,     9,     0,     9,     7,     3,     0
+static const short yyrhs[] = {    13,
+     8,     0,    14,     0,    13,     6,    13,     0,    13,     5,
+    13,     0,     9,    13,    10,     0,    13,     7,    13,     0,
+     3,     0,     4,     0,    14,    14,     0,    14,     7,    14,
+     0,    14,    11,     3,     0,     9,    14,    10,     0
 };
 
 #endif
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-    26,    28,    30,    31,    32,    33
+    34,    36,    38,    39,    40,    41,    43,    45,    46,    47,
+    48,    49
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","CONST",
-"VAR","'\\n'","'*'","'^'","program","memberOfPolynom",""
+"VAR","'-'","'+'","'*'","'\\n'","'('","')'","'^'","program","expressionOfPolynom",
+"memberOfPolynom",""
 };
 #endif
 
 static const short yyr1[] = {     0,
-     8,     9,     9,     9,     9,     9
+    12,    13,    13,    13,    13,    13,    14,    14,    14,    14,
+    14,    14
 };
 
 static const short yyr2[] = {     0,
-     2,     1,     1,     2,     3,     3
+     2,     1,     3,     3,     3,     3,     1,     1,     2,     3,
+     3,     3
 };
 
 static const short yydefact[] = {     0,
-     2,     3,     0,     1,     0,     0,     4,     5,     6,     0,
-     0,     0
+     7,     8,     0,     0,     2,     0,     2,     0,     0,     0,
+     1,     0,     0,     0,     9,     5,    12,     4,     3,     6,
+    10,     0,    11,     0,     0,     0
 };
 
-static const short yydefgoto[] = {    10,
-     7
+static const short yydefgoto[] = {    24,
+     4,    15
 };
 
 static const short yypact[] = {    -2,
--32768,-32768,     3,-32768,    -2,     1,     8,     8,-32768,    13,
-    16,-32768
+-32768,-32768,    -2,    42,    20,    36,    11,    -2,    -2,    -2,
+-32768,     2,     2,     1,    20,-32768,-32768,    10,    12,-32768,
+    29,    11,-32768,    25,    26,-32768
 };
 
 static const short yypgoto[] = {-32768,
-     0
+    27,     0
 };
 
 
-#define	YYLAST		16
+#define	YYLAST		50
 
 
-static const short yytable[] = {     3,
-     1,     2,     0,     9,     8,     1,     2,     4,     5,     6,
-     1,     2,    11,     5,     6,    12
+static const short yytable[] = {     5,
+     1,     2,     7,    23,     1,     2,     3,     5,     5,     5,
+    13,    21,    22,     1,     2,     9,    10,    12,    10,    13,
+    17,    14,     1,     2,    25,    26,    12,     0,    13,     6,
+    14,     1,     2,     0,    18,    19,    20,    13,     0,    14,
+     8,     9,    10,     0,     0,    16,     8,     9,    10,    11
 };
 
 static const short yycheck[] = {     0,
-     3,     4,    -1,     3,     5,     3,     4,     5,     6,     7,
-     3,     4,     0,     6,     7,     0
+     3,     4,     3,     3,     3,     4,     9,     8,     9,    10,
+     9,    12,    13,     3,     4,     6,     7,     7,     7,     9,
+    10,    11,     3,     4,     0,     0,     7,    -1,     9,     3,
+    11,     3,     4,    -1,     8,     9,    10,     9,    -1,    11,
+     5,     6,     7,    -1,    -1,    10,     5,     6,     7,     8
 };
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
 #line 3 "bison.simple"
@@ -640,28 +657,52 @@ yyreduce:
   switch (yyn) {
 
 case 1:
-#line 27 "file.y"
-{yyval.polynomsMember=yyvsp[-1].polynomsMember; /*printf("END\n");printMember($$);printf("\n");*/;
+#line 35 "file.y"
+{yyval.polynomsExpression=yyvsp[-1].polynomsExpression; printf("END\n");printExpression(yyvsp[-1].polynomsExpression);printf("\n");;
     break;}
 case 2:
-#line 29 "file.y"
-{   yyval.polynomsMember = (struct SMemberOfPolynom*) malloc(sizeof(struct SMemberOfPolynom)); initMemberOfPolynom(yyval.polynomsMember,0,yyvsp[0].value);;
+#line 37 "file.y"
+{yyval.polynomsExpression=(struct SExpressionOfPolynom*) malloc(sizeof(struct SExpressionOfPolynom)); initExpressionOfPolynom(yyval.polynomsExpression,yyvsp[0].polynomsMember);;
     break;}
 case 3:
-#line 30 "file.y"
-{   yyval.polynomsMember = (struct SMemberOfPolynom*) malloc(sizeof(struct SMemberOfPolynom)); initMemberOfPolynom(yyval.polynomsMember,yyvsp[0].literal,0);;
+#line 38 "file.y"
+{yyval.polynomsExpression=yyvsp[-2].polynomsExpression;addExpression(yyvsp[-2].polynomsExpression,yyvsp[0].polynomsExpression,1);;
     break;}
 case 4:
-#line 31 "file.y"
-{   yyval.polynomsMember = mulMembers(yyvsp[-1].polynomsMember,yyvsp[0].polynomsMember); free(yyvsp[0].polynomsMember);;
+#line 39 "file.y"
+{yyval.polynomsExpression=yyvsp[-2].polynomsExpression;addExpression(yyvsp[-2].polynomsExpression,yyvsp[0].polynomsExpression,0);;
     break;}
 case 5:
-#line 32 "file.y"
-{   yyval.polynomsMember = mulMembers(yyvsp[-2].polynomsMember,yyvsp[0].polynomsMember); free(yyvsp[0].polynomsMember);;
+#line 40 "file.y"
+{yyval.polynomsExpression=yyvsp[-1].polynomsExpression; yyvsp[-1].polynomsExpression->brackets=1;printf("\nBRACKETS \n");;
     break;}
 case 6:
-#line 33 "file.y"
-{   yyval.polynomsMember = powPolyMember(yyvsp[-2].polynomsMember,yyvsp[0].value);;
+#line 41 "file.y"
+{yyval.polynomsExpression=mulExpressions(yyvsp[-2].polynomsExpression,yyvsp[0].polynomsExpression);;
+    break;}
+case 7:
+#line 44 "file.y"
+{   yyval.polynomsMember = (struct SMemberOfPolynom*) malloc(sizeof(struct SMemberOfPolynom)); initMemberOfPolynom(yyval.polynomsMember,0,yyvsp[0].value);;
+    break;}
+case 8:
+#line 45 "file.y"
+{   yyval.polynomsMember = (struct SMemberOfPolynom*) malloc(sizeof(struct SMemberOfPolynom)); initMemberOfPolynom(yyval.polynomsMember,yyvsp[0].literal,0);;
+    break;}
+case 9:
+#line 46 "file.y"
+{   yyval.polynomsMember = mulMembers(yyvsp[-1].polynomsMember,yyvsp[0].polynomsMember); free(yyvsp[0].polynomsMember);;
+    break;}
+case 10:
+#line 47 "file.y"
+{   yyval.polynomsMember = mulMembers(yyvsp[-2].polynomsMember,yyvsp[0].polynomsMember); free(yyvsp[0].polynomsMember);;
+    break;}
+case 11:
+#line 48 "file.y"
+{   yyval.polynomsMember = powPolyMember(yyvsp[-2].polynomsMember,yyvsp[0].value,0);;
+    break;}
+case 12:
+#line 49 "file.y"
+{   yyval.polynomsMember = yyvsp[-1].polynomsMember; yyval.polynomsMember->brackets=1;printf("MEMBER BRACKETS ");;
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
@@ -861,10 +902,10 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 34 "file.y"
+#line 50 "file.y"
 
 
 
 void yyerror(char *s) {
-   printf("ERROR");
+   PrintError(s);
 }

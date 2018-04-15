@@ -8,6 +8,7 @@
 #include <stdarg.h>
 #include <float.h>
 #include "SMemberOfPolynom.h"
+#include "SExpressionOfPolynom.h"
 /*
 * global variable
 */

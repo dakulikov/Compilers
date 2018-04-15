@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CSExpressionOfPolynom.c" />
     <ClCompile Include="CSMemberOfPolynom.c" />
     <ClCompile Include="file_tab.c" />
     <ClCompile Include="lex.yy.c" />
@@ -123,6 +124,7 @@
   <ItemGroup>
     <ClInclude Include="file_tab.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="SExpressionOfPolynom.h" />
     <ClInclude Include="SMemberOfPolynom.h" />
   </ItemGroup>
   <ItemGroup>

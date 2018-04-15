@@ -1,12 +1,15 @@
 #pragma once
 #include "stdio.h"
+#include "stdlib.h"
 #include "math.h"
 #define SIZE 256
+#define bool char
 struct SMemberOfPolynom
 {
 	char literals[SIZE];
 	double  powers[SIZE];
 	double  coefficient;
+	bool brackets;
 	int numLiter;
 };
 
