@@ -3,7 +3,7 @@
 	#define YYERROR_VERBOSE 1
 	#define YYDEBUG 1
 	int yylex(void);
-	void yyerror(char*);
+	void yyerror(const char*);
 	#include "stdio.h"
 	#include "SMemberOfPolynom.h"
 	#include "SExpressionOfPolynom.h"
@@ -45,11 +45,11 @@ memberOfPolynom:
 		|VAR 						     	{   $$ = (struct SMemberOfPolynom*) malloc(sizeof(struct SMemberOfPolynom)); initMemberOfPolynom($$,$1,0);}
 		|memberOfPolynom memberOfPolynom   	{   $$ = mulMembers($1,$2); free($2);}
 	    |memberOfPolynom '*' memberOfPolynom{   $$ = mulMembers($1,$3); free($3);}
-		|memberOfPolynom '^' CONST			{   $$ = powPolyMember($1,$3,0);}
+		|memberOfPolynom '^' CONST			{   $$ = powPolyMember($1,$3);}
 		|'(' memberOfPolynom ')'            {   $$ = $2; $$->brackets=1;printf("MEMBER BRACKETS ");}
 %%
 
 
-void yyerror(char *s) {
+void yyerror(const char *s) {
    PrintError(s);
 }

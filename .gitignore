@@ -2,4 +2,4 @@ Debug/
 *.exe
 .vs/
 *.vcxproj*
-
+*.sln

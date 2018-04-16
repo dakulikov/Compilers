@@ -211,7 +211,7 @@ void BeginToken(char *t) {
 *
 * the master
 *------------------------------------------------------------------*/
-void main(void)
+int main(void)
 {
 	/*int i;
 	char *infile = NULL;*/

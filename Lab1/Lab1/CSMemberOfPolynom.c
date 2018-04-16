@@ -1,8 +1,8 @@
-#pragma once
 #include "SMemberOfPolynom.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
+#include "math.h"
 void initMemberOfPolynom(struct SMemberOfPolynom* in,char liter,double constant)
 {
 	in->coefficient = 1;

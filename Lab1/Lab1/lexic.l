@@ -1,6 +1,6 @@
 
 %{
-    #include "file_tab.h"
+    #include "y.tab.h"
 	#include "stdlib.h"
     int yylex(void);
     void yyerror(char *);
