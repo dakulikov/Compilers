@@ -11,9 +11,24 @@ void initExpressionOfPolynom(struct SExpressionOfPolynom* in, struct SMemberOfPo
 	in->numMembers = 1;
 	in->brackets = 0;
 }
+struct SExpressionOfPolynom* copyExpression(struct SExpressionOfPolynom* in)
+{
+	struct SExpressionOfPolynom* tempExpr = (struct SExpressionOfPolynom*) malloc(sizeof(struct SExpressionOfPolynom));
+	tempExpr->arraySize = 10;
+	tempExpr->arrayOfPolynomsMembersPtr = (struct SMemberOfPolynom**) malloc(in->numMembers * sizeof(struct SMemberOfPolynom*));
+	tempExpr->numMembers = in->numMembers;
+	tempExpr->brackets = in->brackets;
+	for (int i = 0; i < in->numMembers; i++)
+	{
+		struct SMemberOfPolynom* tempMemb = (struct SMemberOfPolynom*)malloc(sizeof(struct SMemberOfPolynom));
+		memcpy(tempMemb, in->arrayOfPolynomsMembersPtr[i], sizeof(struct SMemberOfPolynom));
+		tempExpr->arrayOfPolynomsMembersPtr[i] = tempMemb;
+	}
+	return tempExpr;
+}
 struct SExpressionOfPolynom* mulExpressions(struct SExpressionOfPolynom* first, struct SExpressionOfPolynom* second)
 {
-	printf("START MUL EXPRESSIONS ");
+	printf("\nSTART MUL EXPRESSIONS ");
 	printf("(");
 	printExpression(first);
 	printf(")");
@@ -58,7 +73,7 @@ struct SExpressionOfPolynom* mulExpressions(struct SExpressionOfPolynom* first, 
 				if (!presence)
 				{
 					temp->literals[temp->numLiter] = second->arrayOfPolynomsMembersPtr[g]->literals[i];
-					temp->powers[first->arrayOfPolynomsMembersPtr[k]->numLiter] = second-> arrayOfPolynomsMembersPtr[j]->powers[i];
+					temp->powers[temp->numLiter] = second-> arrayOfPolynomsMembersPtr[g]->powers[i];
 					temp->numLiter++;
 				};
 				i++;
@@ -82,16 +97,9 @@ struct SExpressionOfPolynom* mulExpressions(struct SExpressionOfPolynom* first, 
 		free(second->arrayOfPolynomsMembersPtr[i]);
 	free(second->arrayOfPolynomsMembersPtr);
 	free(second);
-	printf("END MUL EXPRESSIONS ");
-	printf("(");
-	printExpression(first);
-	printf(")");
-	printf("*");
-	printf("(");
-	printExpression(second);
-	printf(")");
-	printf("=");
+	printf("END MUL EXPRESSIONS: =");
 	printExpression(out);
+	printf("\n");
 	return out;
 }
 void addExpression(struct SExpressionOfPolynom* first, struct SExpressionOfPolynom* second,bool operation)

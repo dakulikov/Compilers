@@ -258,6 +258,7 @@ int main(void)
 	fclose(file);
 	*/
 	yyparse();
+	getchar();
 	return 0;
 }
 
