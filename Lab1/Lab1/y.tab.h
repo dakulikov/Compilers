@@ -46,19 +46,21 @@ extern int yydebug;
   enum yytokentype
   {
     CONST = 258,
-    VAR = 259
+    VAR = 259,
+    NEG = 260
   };
 #endif
 /* Tokens.  */
 #define CONST 258
 #define VAR 259
+#define NEG 260
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 31 "file.y" /* yacc.c:1909  */
+#line 30 "file.y" /* yacc.c:1909  */
 
 	double value;
 	char literal;
@@ -66,7 +68,7 @@ union YYSTYPE
 	struct SExpressionOfPolynom * polynomsExpression;
 
 
-#line 70 "y.tab.h" /* yacc.c:1909  */
+#line 72 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -74,9 +76,23 @@ typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+/* Location type.  */
+#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
+typedef struct YYLTYPE YYLTYPE;
+struct YYLTYPE
+{
+  int first_line;
+  int first_column;
+  int last_line;
+  int last_column;
+};
+# define YYLTYPE_IS_DECLARED 1
+# define YYLTYPE_IS_TRIVIAL 1
+#endif
+
 
 extern YYSTYPE yylval;
-
+extern YYLTYPE yylloc;
 int yyparse (void);
 
 #endif /* !YY_YY_Y_TAB_H_INCLUDED  */

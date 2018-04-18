@@ -1,5 +1,6 @@
 #pragma once
 #include "SMemberOfPolynom.h"
+#include "y.tab.h"
 struct SExpressionOfPolynom
 {
 	struct SMemberOfPolynom** arrayOfPolynomsMembersPtr;
@@ -14,3 +15,4 @@ bool isEqualLiterals(struct SMemberOfPolynom * first, struct SMemberOfPolynom * 
 void addExpression(struct SExpressionOfPolynom* first, struct SExpressionOfPolynom* second, bool operation);
 struct SExpressionOfPolynom* mulExpressions(struct SExpressionOfPolynom* first, struct SExpressionOfPolynom* second);
 struct SExpressionOfPolynom* copyExpression(struct SExpressionOfPolynom* in);
+struct SExpressionOfPolynom *negateExpression(struct SExpressionOfPolynom* ex);

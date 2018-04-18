@@ -2,6 +2,7 @@
 %{
     #include "y.tab.h"
 	#include "stdlib.h"
+    #include "float.h"
     int yylex(void);
     void yyerror(char *);
 
@@ -29,23 +30,30 @@
 
 %}
 
+%option yylineno
+
 %%
 
 ([0-9]+)|([0-9]*\.[0-9]+) {
 					BeginToken(yytext);
                     yylval.value = atof(yytext);
+                    printf("CONST %f\n", yylval.value);
+//                    if (FLT_DIG < strlen(yytext))
+//                        printf("WARNING digits are more than precision limit\n", yylval.value);
                     return CONST;
                 }
 
-[a-zA-Z]        {
+[a-zA-Z]       {
 					BeginToken(yytext);
                     yylval.literal = *yytext;
+                    printf("VAR %c\n", *yytext);
                     return VAR;
                 }
 
 
 [-+()=!*^\n$:]     {
 					BeginToken(yytext);
+                    printf("TOKEN %c\n", *yytext);
                     return *yytext; 
                 }
 
@@ -62,4 +70,8 @@
 int yywrap(void)
 {
     return 1;
+}
+
+void yyerror(char *s) {
+    PrintError("%s. Line: %d", s, yylineno);
 }

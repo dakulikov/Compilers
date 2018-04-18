@@ -162,8 +162,27 @@ extern FILE *yyin, *yyout;
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
 
-    #define YY_LESS_LINENO(n)
-    #define YY_LINENO_REWIND_TO(ptr)
+    /* Note: We specifically omit the test for yy_rule_can_match_eol because it requires
+     *       access to the local variable yy_act. Since yyless() is a macro, it would break
+     *       existing scanners that call yyless() from OUTSIDE yylex.
+     *       One obvious solution it to make yy_act a global. I tried that, and saw
+     *       a 5% performance hit in a non-yylineno scanner, because yy_act is
+     *       normally declared as a register variable-- so it is not worth it.
+     */
+    #define  YY_LESS_LINENO(n) \
+            do { \
+                int yyl;\
+                for ( yyl = n; yyl < yyleng; ++yyl )\
+                    if ( yytext[yyl] == '\n' )\
+                        --yylineno;\
+            }while(0)
+    #define YY_LINENO_REWIND_TO(dst) \
+            do {\
+                const char *p;\
+                for ( p = yy_cp-1; p >= (dst); --p)\
+                    if ( *p == '\n' )\
+                        --yylineno;\
+            }while(0)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -438,6 +457,11 @@ static yyconst flex_int16_t yy_chk[22] =
        14
     } ;
 
+/* Table of booleans, true if rule could match eol. */
+static yyconst flex_int32_t yy_rule_can_match_eol[7] =
+    {   0,
+0, 0, 1, 0, 0, 0,     };
+
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
 
@@ -456,6 +480,7 @@ char *yytext;
 #line 3 "lexic.l"
     #include "y.tab.h"
 	#include "stdlib.h"
+    #include "float.h"
     int yylex(void);
     void yyerror(char *);
 
@@ -481,7 +506,7 @@ char *yytext;
 		YY_FATAL_ERROR( "input in flex scanner failed" );
 	
 
-#line 485 "lex.yy.c"
+#line 510 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -699,10 +724,10 @@ YY_DECL
 		}
 
 	{
-#line 32 "lexic.l"
+#line 35 "lexic.l"
 
 
-#line 706 "lex.yy.c"
+#line 731 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -748,6 +773,16 @@ yy_find_action:
 
 		YY_DO_BEFORE_ACTION;
 
+		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
+			{
+			int yyl;
+			for ( yyl = 0; yyl < yyleng; ++yyl )
+				if ( yytext[yyl] == '\n' )
+					
+    yylineno++;
+;
+			}
+
 do_action:	/* This label is used only to access EOF actions. */
 
 		switch ( yy_act )
@@ -761,41 +796,46 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 34 "lexic.l"
+#line 37 "lexic.l"
 {
 					BeginToken(yytext);
                     yylval.value = atof(yytext);
+                    printf("CONST %f\n", yylval.value);
+//                    if (FLT_DIG < strlen(yytext))
+//                        printf("WARNING digits are more than precision limit\n", yylval.value);
                     return CONST;
                 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 40 "lexic.l"
+#line 46 "lexic.l"
 {
 					BeginToken(yytext);
                     yylval.literal = *yytext;
+                    printf("VAR %c\n", *yytext);
                     return VAR;
                 }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 47 "lexic.l"
+#line 54 "lexic.l"
 {
 					BeginToken(yytext);
+                    printf("TOKEN %c\n", *yytext);
                     return *yytext; 
                 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 52 "lexic.l"
+#line 60 "lexic.l"
 {	
 					BeginToken(yytext);
 				}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 56 "lexic.l"
+#line 64 "lexic.l"
 {
 					BeginToken(yytext);
                     return yytext[0];
@@ -803,10 +843,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 61 "lexic.l"
+#line 69 "lexic.l"
 ECHO;
 	YY_BREAK
-#line 810 "lex.yy.c"
+#line 850 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1170,6 +1210,10 @@ static int yy_get_next_buffer (void)
 
 	*--yy_cp = (char) c;
 
+    if ( c == '\n' ){
+        --yylineno;
+    }
+
 	(yytext_ptr) = yy_bp;
 	(yy_hold_char) = *yy_cp;
 	(yy_c_buf_p) = yy_cp;
@@ -1246,6 +1290,11 @@ static int yy_get_next_buffer (void)
 	c = *(unsigned char *) (yy_c_buf_p);	/* cast for 8-bit char's */
 	*(yy_c_buf_p) = '\0';	/* preserve yytext */
 	(yy_hold_char) = *++(yy_c_buf_p);
+
+	if ( c == '\n' )
+		
+    yylineno++;
+;
 
 	return c;
 }
@@ -1713,6 +1762,9 @@ static int yy_init_globals (void)
      * This function is called from yylex_destroy(), so don't allocate here.
      */
 
+    /* We do not touch yylineno unless the option is enabled. */
+    yylineno =  1;
+    
     (yy_buffer_stack) = NULL;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
@@ -1807,10 +1859,14 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 61 "lexic.l"
+#line 69 "lexic.l"
 
 
 int yywrap(void)
 {
     return 1;
+}
+
+void yyerror(char *s) {
+    PrintError("%s. Line: %d", s, yylineno);
 }

@@ -26,7 +26,6 @@
 	}
 %}
 
-
 %union 
 {
 	double value;
@@ -45,8 +44,10 @@
 %type <polynomsExpression> variableWithPolynom
 %left '='
 %left '-' '+'
-%left '*'
+%right NEG
+%left  '*'
 %right '^'
+
 %%
 
 
@@ -139,50 +140,61 @@ expressionOfPolynom:
 		|expressionOfPolynom '-' expressionOfPolynom {$$=$1;addExpression($1,$3,0);}
 		|'('expressionOfPolynom')'					 {$$=$2; $2->brackets=1;printf("\nBRACKETS \n");}
 		|expressionOfPolynom '*' expressionOfPolynom {$$=mulExpressions($1,$3);}
-		|expressionOfPolynom expressionOfPolynom {		
+/*		|expressionOfPolynom expressionOfPolynom {		
 														printf("MUL MEMBERS:");
 														printExpression($1);
 														printf("*");
 														printExpression($2);
 														printf("\n");
-													    if($1->numMembers==1 && $2->numMembers==1)
+										 			    if($1->numMembers==1 && $2->numMembers==1)
 															$$=mulExpressions($1,$2);
 														else
 														{
-															printf("ERROR: it should be members only\n");
-															//exit(1);
+															PrintError("it should be members only! Line %d:c%d to %d:c%d",
+												                        @1.first_line, @1.first_column,
+												                        @2.last_line, @1.last_column);
 														}
 												 }
-
+*/
 		|expressionOfPolynom '^' expressionOfPolynom{
 													printf("POWERED EXPRESSION: \n");
-													printExpression($1);
+													printf("("); printExpression($1); printf(")");
 													printf("^");
-													printExpression($3);
+													printf("("); printExpression($3); printf(")");
 													printf("\n");
 													struct SExpressionOfPolynom* temp1,*temp2;
 													temp1 = copyExpression($1);
+
+													if ($1->arrayOfPolynomsMembersPtr[0]->coefficient == 0.0 && $3->arrayOfPolynomsMembersPtr[0]->coefficient == 0.0) 
+													{
+														 PrintError("Indeterminate 0^0! Line %d:c%d to %d:c%d",
+												                        @1.first_line, @1.first_column,
+												                        @3.last_line, @3.last_column);
+													}
+
 													
 													if ($3->numMembers==1&&$3->arrayOfPolynomsMembersPtr[0]->numLiter==0)
-													for (int i=1;i<$3->arrayOfPolynomsMembersPtr[0]->coefficient;i++)
 													{
-														temp2 = copyExpression($1);
-														temp1=mulExpressions(temp1,temp2);
+														for (int i=1;i<$3->arrayOfPolynomsMembersPtr[0]->coefficient;i++)
+														{
+															temp2 = copyExpression($1);
+															temp1=mulExpressions(temp1,temp2);
+														}
 													}
 													else
 													{
-														printf("ERROR: released only ^ CONST\n");
-														//yyerror(1);
+														PrintError("released only ^ CONST! Line %d:c%d to %d:c%d",
+														            @3.first_line, @3.first_column,
+														            @3.last_line, @3.last_column);
 													}
 													$$=temp1;
 												 }
+			| '-' expressionOfPolynom %prec NEG 	
+													{
+														$$ = negateExpression($2);
+													}
 		
 memberOfPolynom:
 		CONST 	{   $$ = (struct SMemberOfPolynom*) malloc(sizeof(struct SMemberOfPolynom)); initMemberOfPolynom($$,0,$1);}
 		|VAR 	{   $$ = (struct SMemberOfPolynom*) malloc(sizeof(struct SMemberOfPolynom)); initMemberOfPolynom($$,$1,0);}
 %%
-
-
-void yyerror(char *s) {
-   PrintError(s);
-}

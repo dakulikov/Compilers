@@ -36,11 +36,22 @@ struct SExpressionOfPolynom* mulExpressions(struct SExpressionOfPolynom* first, 
 	printf("(");
 	printExpression(second);
 	printf(")");
+	printf("\n");
 
 	struct SExpressionOfPolynom* out = (struct SExpressionOfPolynom *)malloc(sizeof(struct SExpressionOfPolynom));
 	out->arraySize = 10;
 	out->arrayOfPolynomsMembersPtr = (struct SMemberOfPolynom**) malloc(10 * sizeof(struct SMemberOfPolynom*));
 	out->numMembers = 0;
+	
+	if (first->arrayOfPolynomsMembersPtr[0]->literals[0] == 0 &&  first->arrayOfPolynomsMembersPtr[0]->coefficient == 0 ||
+		second->arrayOfPolynomsMembersPtr[0]->literals[0] == 0 && second->arrayOfPolynomsMembersPtr[0]->coefficient == 0)
+	{
+		printf("END MUL EXPRESSIONS: =");
+		printExpression(out);
+		printf("\n");
+		return out;
+	}
+
 	
 	for (int k = 0; k < first->numMembers; k++)
 	{
@@ -191,11 +202,25 @@ void printExpression(struct SExpressionOfPolynom*in)
 	if (in->numMembers>0)
 		printMember(in->arrayOfPolynomsMembersPtr[0]);
 	else
-		printf(" 0 ");
+		printf(" 0 ");	
 	for (int i=1; i < in->numMembers; i++)
 	{
 		if (in->arrayOfPolynomsMembersPtr[i]->coefficient > 0)
 			printf("+");
 		printMember(in->arrayOfPolynomsMembersPtr[i]);
 	}
+}
+
+struct SExpressionOfPolynom *negateExpression(struct SExpressionOfPolynom* ex)
+{
+	printf("NEGATE EXPRESSION ");
+	printExpression(ex);
+	for (int i=0; i < ex->numMembers; i++)
+	{
+		ex->arrayOfPolynomsMembersPtr[i]->coefficient *= -1;
+	}
+	printf(" = ");
+	printExpression(ex);
+	printf("\n");
+	return ex;
 }

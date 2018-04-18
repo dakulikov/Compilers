@@ -100,7 +100,11 @@ void PrintError(char *errorstring, ...) {
 	/*================================================================*/
 	/* a bit more complicate version ---------------------------------*/
 	/* */
-	if (eof) {
+	if (end == 0 && start == 0)
+	{
+		fprintf(stdout, "...... !\n");
+	}
+	else if (eof) {
 		fprintf(stdout, "...... !");
 		for (i = 0; i<lBuffer; i++)
 			fprintf(stdout, ".");
@@ -258,7 +262,6 @@ int main(void)
 	fclose(file);
 	*/
 	yyparse();
-	getchar();
 	return 0;
 }
 
