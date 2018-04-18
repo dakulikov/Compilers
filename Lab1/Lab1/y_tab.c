@@ -17,14 +17,33 @@
 	#include "stdio.h"
 	#include "SMemberOfPolynom.h"
 	#include "SExpressionOfPolynom.h"
+	#include "conio.h"
+	struct assignedExpression
+	{
+		char var;
+		struct SExpressionOfPolynom* polynom;
+	};
+	struct assignedExpression variablesWithExpressions[256]={0};
+	int numAssignedExpressions=0;
+	struct SExpressionOfPolynom* findExpression(char var)
+	{
+		//printf("NUM ASSIGNED EXPRESSION %d",numAssignedExpressions);
+		for (int i=0;i<numAssignedExpressions;i++)
+		{
+			if (variablesWithExpressions[i].var==var)
+				return variablesWithExpressions[i].polynom;
+		}
+		return 0;
+	}
 
-#line 13 "file.y"
+#line 31 "file.y"
 typedef union 
 {
 	double value;
 	char literal;
 	struct SMemberOfPolynom * polynomsMember;
 	struct SExpressionOfPolynom * polynomsExpression;
+
 } YYSTYPE;
 
 #ifndef YYLTYPE
@@ -53,23 +72,23 @@ typedef
 
 
 
-#define	YYFINAL		26
+#define	YYFINAL		29
 #define	YYFLAG		-32768
-#define	YYNTBASE	12
+#define	YYNTBASE	14
 
-#define YYTRANSLATE(x) ((unsigned)(x) <= 259 ? yytranslate[x] : 15)
+#define YYTRANSLATE(x) ((unsigned)(x) <= 259 ? yytranslate[x] : 18)
 
 static const char yytranslate[] = {     0,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     8,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,    11,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     9,
-    10,     7,     6,     2,     5,     2,     2,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,    12,
+    13,     8,     7,     2,     6,     2,     2,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,     2,    10,     2,     2,
+     5,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,    11,     2,     2,     2,     2,     2,     2,
+     2,     2,     2,     9,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -90,79 +109,88 @@ static const char yytranslate[] = {     0,
 
 #if YYDEBUG != 0
 static const short yyprhs[] = {     0,
-     0,     3,     5,     9,    13,    17,    21,    23,    25,    28,
-    32,    36
+     0,     5,    10,    16,    18,    22,    26,    30,    34,    37,
+    41,    43
 };
 
-static const short yyrhs[] = {    13,
-     8,     0,    14,     0,    13,     6,    13,     0,    13,     5,
-    13,     0,     9,    13,    10,     0,    13,     7,    13,     0,
-     3,     0,     4,     0,    14,    14,     0,    14,     7,    14,
-     0,    14,    11,     3,     0,     9,    14,    10,     0
+static const short yyrhs[] = {    15,
+    16,    10,    11,     0,    16,     5,    16,    11,     0,    15,
+    16,     5,    16,    11,     0,    17,     0,    16,     7,    16,
+     0,    16,     6,    16,     0,    12,    16,    13,     0,    16,
+     8,    16,     0,    16,    16,     0,    16,     9,    16,     0,
+     3,     0,     4,     0
 };
 
 #endif
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-    34,    36,    38,    39,    40,    41,    43,    45,    46,    47,
-    48,    49
+    54,    88,   112,   134,   139,   140,   141,   142,   143,   158,
+   181,   183
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","CONST",
-"VAR","'-'","'+'","'*'","'\\n'","'('","')'","'^'","program","expressionOfPolynom",
-"memberOfPolynom",""
+"VAR","'='","'-'","'+'","'*'","'^'","':'","'\\n'","'('","')'","program","variableWithPolynom",
+"expressionOfPolynom","memberOfPolynom",""
 };
 #endif
 
 static const short yyr1[] = {     0,
-    12,    13,    13,    13,    13,    13,    14,    14,    14,    14,
-    14,    14
+    14,    15,    15,    16,    16,    16,    16,    16,    16,    16,
+    17,    17
 };
 
 static const short yyr2[] = {     0,
-     2,     1,     3,     3,     3,     3,     1,     1,     2,     3,
-     3,     3
+     4,     4,     5,     1,     3,     3,     3,     3,     2,     3,
+     1,     1
 };
 
 static const short yydefact[] = {     0,
-     7,     8,     0,     0,     2,     0,     2,     0,     0,     0,
-     1,     0,     0,     0,     9,     5,    12,     4,     3,     6,
-    10,     0,    11,     0,     0,     0
+    11,    12,     0,     0,     0,     4,     0,     0,     0,     0,
+     0,     0,     0,     9,     7,     0,     0,     0,     6,     5,
+     8,    10,     0,     1,     2,     3,     0,     0,     0
 };
 
-static const short yydefgoto[] = {    24,
-     4,    15
+static const short yydefgoto[] = {    27,
+     4,    14,     6
 };
 
-static const short yypact[] = {    -2,
--32768,-32768,    -2,    42,    20,    36,    11,    -2,    -2,    -2,
--32768,     2,     2,     1,    20,-32768,-32768,    10,    12,-32768,
-    29,    11,-32768,    25,    26,-32768
+static const short yypact[] = {    69,
+-32768,-32768,    69,    69,    32,-32768,    11,    22,    69,    69,
+    69,    69,    69,    59,-32768,    69,   -10,    39,    66,    66,
+    73,    73,    49,-32768,-32768,-32768,     2,     5,-32768
 };
 
 static const short yypgoto[] = {-32768,
-    27,     0
+-32768,     0,-32768
 };
 
 
-#define	YYLAST		50
+#define	YYLAST		85
 
 
 static const short yytable[] = {     5,
-     1,     2,     7,    23,     1,     2,     3,     5,     5,     5,
-    13,    21,    22,     1,     2,     9,    10,    12,    10,    13,
-    17,    14,     1,     2,    25,    26,    12,     0,    13,     6,
-    14,     1,     2,     0,    18,    19,    20,    13,     0,    14,
-     8,     9,    10,     0,     0,    16,     8,     9,    10,    11
+    24,    28,     7,     8,    29,     0,     0,     0,    18,    19,
+    20,    21,    22,     1,     2,    23,    10,    11,    12,    13,
+     0,     0,     3,    15,     1,     2,    16,    10,    11,    12,
+    13,    17,     0,     3,     1,     2,     9,    10,    11,    12,
+    13,     1,     2,     3,    10,    11,    12,    13,     0,    25,
+     3,     1,     2,     0,    10,    11,    12,    13,     0,    26,
+     3,     1,     2,     0,    10,    11,    12,    13,     1,     2,
+     3,     1,     2,    12,    13,     1,     2,     3,     0,     0,
+     3,    13,     0,     0,     3
 };
 
 static const short yycheck[] = {     0,
-     3,     4,     3,     3,     3,     4,     9,     8,     9,    10,
-     9,    12,    13,     3,     4,     6,     7,     7,     7,     9,
-    10,    11,     3,     4,     0,     0,     7,    -1,     9,     3,
-    11,     3,     4,    -1,     8,     9,    10,     9,    -1,    11,
-     5,     6,     7,    -1,    -1,    10,     5,     6,     7,     8
+    11,     0,     3,     4,     0,    -1,    -1,    -1,     9,    10,
+    11,    12,    13,     3,     4,    16,     6,     7,     8,     9,
+    -1,    -1,    12,    13,     3,     4,     5,     6,     7,     8,
+     9,    10,    -1,    12,     3,     4,     5,     6,     7,     8,
+     9,     3,     4,    12,     6,     7,     8,     9,    -1,    11,
+    12,     3,     4,    -1,     6,     7,     8,     9,    -1,    11,
+    12,     3,     4,    -1,     6,     7,     8,     9,     3,     4,
+    12,     3,     4,     8,     9,     3,     4,    12,    -1,    -1,
+    12,     9,    -1,    -1,    12
 };
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
 #line 3 "bison.simple"
@@ -657,52 +685,164 @@ yyreduce:
   switch (yyn) {
 
 case 1:
-#line 35 "file.y"
-{yyval.polynomsExpression=yyvsp[-1].polynomsExpression; printf("END\n");printExpression(yyvsp[-1].polynomsExpression);printf("\n");;
+#line 55 "file.y"
+{	
+										struct SExpressionOfPolynom* out = (struct SExpressionOfPolynom*) malloc(sizeof(struct SExpressionOfPolynom)); 
+										out->arraySize = 10;
+										out->arrayOfPolynomsMembersPtr = (struct SMemberOfPolynom**) malloc(10 * sizeof(struct SMemberOfPolynom*));
+										out->numMembers = 0;
+										printf("CALCULATE VARIABLES \n");
+										printExpression(yyvsp[-2].polynomsExpression);
+										printf("\n");
+										for (int i=0;i<yyvsp[-2].polynomsExpression->numMembers;i++)
+										{
+											struct SExpressionOfPolynom* temp2 = (struct SExpressionOfPolynom*) malloc(sizeof(struct SExpressionOfPolynom)); 
+											if (findExpression(yyvsp[-2].polynomsExpression->arrayOfPolynomsMembersPtr[i]->literals[0]))
+											{
+											struct SExpressionOfPolynom* temp1 = copyExpression(findExpression(yyvsp[-2].polynomsExpression->arrayOfPolynomsMembersPtr[i]->literals[0]));
+											for (int j=1;j<yyvsp[-2].polynomsExpression->arrayOfPolynomsMembersPtr[i]->numLiter;j++)
+											{
+												if (findExpression(yyvsp[-2].polynomsExpression->arrayOfPolynomsMembersPtr[i]->literals[0]))
+												{
+													struct SExpressionOfPolynom* temp2=copyExpression(findExpression(yyvsp[-2].polynomsExpression->arrayOfPolynomsMembersPtr[i]->literals[0]));
+													temp1=mulExpressions(temp1,temp2);
+												}
+											}
+											if (yyvsp[-2].polynomsExpression->arrayOfPolynomsMembersPtr[i]->coefficient>0)
+											addExpression(out,temp1,1);
+											else
+											addExpression(out,temp1,0);
+											}
+											else
+												printf("ERROR: variable %c not found\n",yyvsp[-2].polynomsExpression->arrayOfPolynomsMembersPtr[i]->literals[0]);
+										}
+										yyval.polynomsExpression=out;
+										printExpression(out);
+									 ;
     break;}
 case 2:
-#line 37 "file.y"
-{yyval.polynomsExpression=(struct SExpressionOfPolynom*) malloc(sizeof(struct SExpressionOfPolynom)); initExpressionOfPolynom(yyval.polynomsExpression,yyvsp[0].polynomsMember);;
+#line 89 "file.y"
+{
+																	printf( "DECLARE OF VARIABLE: ");
+																	printExpression(yyvsp[-3].polynomsExpression);
+																	printf("=");
+																	printExpression(yyvsp[-1].polynomsExpression);
+																	printf("\n");
+																	yyval.polynomsExpression=yyvsp[-1].polynomsExpression;	
+																	if (yyvsp[-3].polynomsExpression->numMembers>1)
+																	{
+																		printf("ERROR: variable should not expression\n");			
+																		//exit(1);
+																	}
+																	if (yyvsp[-3].polynomsExpression->arrayOfPolynomsMembersPtr[0]->numLiter>1)
+																	printf("ERROR: variable should be simple liter\n");
+																	if(yyvsp[-3].polynomsExpression->arrayOfPolynomsMembersPtr[0]->powers[0]>1)
+																	printf("ERROR: variable should be without power\n");
+																	if(yyvsp[-3].polynomsExpression->arrayOfPolynomsMembersPtr[0]->coefficient!=1)
+																	printf("ERROR: variable shoule be without coefficient");
+																	variablesWithExpressions[numAssignedExpressions].var=yyvsp[-3].polynomsExpression->arrayOfPolynomsMembersPtr[0]->literals[0];
+																	variablesWithExpressions[numAssignedExpressions].polynom=yyvsp[-1].polynomsExpression;
+																	printExpression(yyvsp[-1].polynomsExpression);
+																	numAssignedExpressions++;
+															;
     break;}
 case 3:
-#line 38 "file.y"
-{yyval.polynomsExpression=yyvsp[-2].polynomsExpression;addExpression(yyvsp[-2].polynomsExpression,yyvsp[0].polynomsExpression,1);;
+#line 112 "file.y"
+{printf( "DECLARE OF VARIABLE: ");
+																	printExpression(yyvsp[-3].polynomsExpression);
+																	printf("=");
+																	printExpression(yyvsp[-1].polynomsExpression);
+																	printf("\n");
+																	yyval.polynomsExpression=yyvsp[-1].polynomsExpression;	
+																	if (yyvsp[-3].polynomsExpression->numMembers>1)
+																	{
+																		printf("ERROR: variable should not be expression\n");			
+																	}
+																	if (yyvsp[-3].polynomsExpression->arrayOfPolynomsMembersPtr[0]->numLiter>1)
+																	printf("ERROR: variable should be simple liter\n");
+																	if(yyvsp[-3].polynomsExpression->arrayOfPolynomsMembersPtr[0]->powers[0]>1)
+																	printf("ERROR: variable should be without power\n");
+																	if(yyvsp[-3].polynomsExpression->arrayOfPolynomsMembersPtr[0]->coefficient!=1)
+																	printf("ERROR: variable shoule be without coefficient");
+																	variablesWithExpressions[numAssignedExpressions].var=yyvsp[-3].polynomsExpression->arrayOfPolynomsMembersPtr[0]->literals[0];
+																	variablesWithExpressions[numAssignedExpressions].polynom=yyvsp[-1].polynomsExpression;
+																	yyvsp[-1].polynomsExpression->brackets=1;
+																	printExpression(yyvsp[-1].polynomsExpression);
+																	numAssignedExpressions++;
+																	;
     break;}
 case 4:
-#line 39 "file.y"
-{yyval.polynomsExpression=yyvsp[-2].polynomsExpression;addExpression(yyvsp[-2].polynomsExpression,yyvsp[0].polynomsExpression,0);;
+#line 135 "file.y"
+{
+														yyval.polynomsExpression=(struct SExpressionOfPolynom*) malloc(sizeof(struct SExpressionOfPolynom)); 
+														initExpressionOfPolynom(yyval.polynomsExpression,yyvsp[0].polynomsMember);
+													 ;
     break;}
 case 5:
-#line 40 "file.y"
-{yyval.polynomsExpression=yyvsp[-1].polynomsExpression; yyvsp[-1].polynomsExpression->brackets=1;printf("\nBRACKETS \n");;
+#line 139 "file.y"
+{yyval.polynomsExpression=yyvsp[-2].polynomsExpression;addExpression(yyvsp[-2].polynomsExpression,yyvsp[0].polynomsExpression,1);;
     break;}
 case 6:
-#line 41 "file.y"
-{yyval.polynomsExpression=mulExpressions(yyvsp[-2].polynomsExpression,yyvsp[0].polynomsExpression);;
+#line 140 "file.y"
+{yyval.polynomsExpression=yyvsp[-2].polynomsExpression;addExpression(yyvsp[-2].polynomsExpression,yyvsp[0].polynomsExpression,0);;
     break;}
 case 7:
-#line 44 "file.y"
-{   yyval.polynomsMember = (struct SMemberOfPolynom*) malloc(sizeof(struct SMemberOfPolynom)); initMemberOfPolynom(yyval.polynomsMember,0,yyvsp[0].value);;
+#line 141 "file.y"
+{yyval.polynomsExpression=yyvsp[-1].polynomsExpression; yyvsp[-1].polynomsExpression->brackets=1;printf("\nBRACKETS \n");;
     break;}
 case 8:
-#line 45 "file.y"
-{   yyval.polynomsMember = (struct SMemberOfPolynom*) malloc(sizeof(struct SMemberOfPolynom)); initMemberOfPolynom(yyval.polynomsMember,yyvsp[0].literal,0);;
+#line 142 "file.y"
+{yyval.polynomsExpression=mulExpressions(yyvsp[-2].polynomsExpression,yyvsp[0].polynomsExpression);;
     break;}
 case 9:
-#line 46 "file.y"
-{   yyval.polynomsMember = mulMembers(yyvsp[-1].polynomsMember,yyvsp[0].polynomsMember); free(yyvsp[0].polynomsMember);;
+#line 143 "file.y"
+{		
+														printf("MUL MEMBERS:");
+														printExpression(yyvsp[-1].polynomsExpression);
+														printf("*");
+														printExpression(yyvsp[0].polynomsExpression);
+														printf("\n");
+													    if(yyvsp[-1].polynomsExpression->numMembers==1 && yyvsp[0].polynomsExpression->numMembers==1)
+															yyval.polynomsExpression=mulExpressions(yyvsp[-1].polynomsExpression,yyvsp[0].polynomsExpression);
+														else
+														{
+															printf("ERROR: it should be members only\n");
+															//exit(1);
+														}
+												 ;
     break;}
 case 10:
-#line 47 "file.y"
-{   yyval.polynomsMember = mulMembers(yyvsp[-2].polynomsMember,yyvsp[0].polynomsMember); free(yyvsp[0].polynomsMember);;
+#line 158 "file.y"
+{
+													printf("POWERED EXPRESSION: \n");
+													printExpression(yyvsp[-2].polynomsExpression);
+													printf("^");
+													printExpression(yyvsp[0].polynomsExpression);
+													printf("\n");
+													struct SExpressionOfPolynom* temp1,*temp2;
+													temp1 = copyExpression(yyvsp[-2].polynomsExpression);
+													
+													if (yyvsp[0].polynomsExpression->numMembers==1&&yyvsp[0].polynomsExpression->arrayOfPolynomsMembersPtr[0]->numLiter==0)
+													for (int i=1;i<yyvsp[0].polynomsExpression->arrayOfPolynomsMembersPtr[0]->coefficient;i++)
+													{
+														temp2 = copyExpression(yyvsp[-2].polynomsExpression);
+														temp1=mulExpressions(temp1,temp2);
+													}
+													else
+													{
+														printf("ERROR: released only ^ CONST\n");
+														//yyerror(1);
+													}
+													yyval.polynomsExpression=temp1;
+												 ;
     break;}
 case 11:
-#line 48 "file.y"
-{   yyval.polynomsMember = powPolyMember(yyvsp[-2].polynomsMember,yyvsp[0].value,0);;
+#line 182 "file.y"
+{   yyval.polynomsMember = (struct SMemberOfPolynom*) malloc(sizeof(struct SMemberOfPolynom)); initMemberOfPolynom(yyval.polynomsMember,0,yyvsp[0].value);;
     break;}
 case 12:
-#line 49 "file.y"
-{   yyval.polynomsMember = yyvsp[-1].polynomsMember; yyval.polynomsMember->brackets=1;printf("MEMBER BRACKETS ");;
+#line 183 "file.y"
+{   yyval.polynomsMember = (struct SMemberOfPolynom*) malloc(sizeof(struct SMemberOfPolynom)); initMemberOfPolynom(yyval.polynomsMember,yyvsp[0].literal,0);;
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
@@ -902,10 +1042,15 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 50 "file.y"
+#line 184 "file.y"
 
 
 
 void yyerror(char *s) {
+	
+   getch();
+   getch();
    PrintError(s);
+   getch();
+   getch();
 }

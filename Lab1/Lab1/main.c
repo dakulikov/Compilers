@@ -258,6 +258,8 @@ void main(void)
 	fclose(file);
 	*/
 	yyparse();
+	getch();
+	getch();
 	return 0;
 }
 

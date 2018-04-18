@@ -4,11 +4,22 @@
 	#include "stdlib.h"
     int yylex(void);
     void yyerror(char *);
-	//#define YY_INPUT(buf,result,max_size)  {\
-    result = GetNextChar(buf, max_size); \
-    if (  result <= 0  ) \
-      result = YY_NULL; \
-    }
+#define YY_INPUT(buf,result,max_size) \
+	if ( yy_current_buffer->yy_is_interactive ) \
+		{ \
+		int c = '*', n; \
+		for ( n = 0; n < max_size && \
+			     (c = getc( yyin )) != EOF&& c!='$' ; ++n ) \
+			buf[n] = (char) c; \
+		if ( c == '\n' ) \
+			buf[n++] = (char) c; \
+		if ( c == EOF && ferror( yyin ) ) \
+			YY_FATAL_ERROR( "input in flex scanner failed" ); \
+		result = n; \
+		} \
+	else if ( ((result = fread( buf, 1, max_size, yyin )) == 0) \
+		  && ferror( yyin ) ) \
+		YY_FATAL_ERROR( "input in flex scanner failed" );
 	
 
 %}
@@ -28,7 +39,7 @@
                 }
 
 
-[-+()=*^\n]     {
+[-+()=!*^\n$:]     {
 					BeginToken(yytext);
                     return *yytext; 
                 }

@@ -13,3 +13,4 @@ struct SMemberOfPolynom* isContain(struct SExpressionOfPolynom* in, struct SMemb
 bool isEqualLiterals(struct SMemberOfPolynom * first, struct SMemberOfPolynom * second);
 void addExpression(struct SExpressionOfPolynom* first, struct SExpressionOfPolynom* second, bool operation);
 struct SExpressionOfPolynom* mulExpressions(struct SExpressionOfPolynom* first, struct SExpressionOfPolynom* second);
+struct SExpressionOfPolynom* copyExpression(struct SExpressionOfPolynom* in);

@@ -294,9 +294,9 @@ static yyconst int yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    1,    1,    1,    1,    1,    1,    4,
+        1,    2,    4,    1,    1,    4,    1,    1,    1,    4,
         4,    4,    4,    1,    4,    5,    1,    6,    6,    6,
-        6,    6,    6,    6,    6,    6,    6,    1,    1,    1,
+        6,    6,    6,    6,    6,    6,    6,    4,    1,    1,
         4,    1,    1,    1,    7,    7,    7,    7,    7,    7,
         7,    7,    7,    7,    7,    7,    7,    7,    7,    7,
         7,    7,    7,    7,    7,    7,    7,    7,    7,    7,
@@ -369,14 +369,25 @@ char *yytext;
 	#include "stdlib.h"
     int yylex(void);
     void yyerror(char *);
-	//#define YY_INPUT(buf,result,max_size)  {\
-    result = GetNextChar(buf, max_size); \
-    if (  result <= 0  ) \
-      result = YY_NULL; \
-    }
+#define YY_INPUT(buf,result,max_size) \
+	if ( yy_current_buffer->yy_is_interactive ) \
+		{ \
+		int c = '*', n; \
+		for ( n = 0; n < max_size && \
+			     (c = getc( yyin )) != EOF&& c!='$' ; ++n ) \
+			buf[n] = (char) c; \
+		if ( c == '\n' ) \
+			buf[n++] = (char) c; \
+		if ( c == EOF && ferror( yyin ) ) \
+			YY_FATAL_ERROR( "input in flex scanner failed" ); \
+		result = n; \
+		} \
+	else if ( ((result = fread( buf, 1, max_size, yyin )) == 0) \
+		  && ferror( yyin ) ) \
+		YY_FATAL_ERROR( "input in flex scanner failed" );
 	
 
-#line 380 "lex.yy.c"
+#line 391 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -523,10 +534,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 16 "lexic.l"
+#line 27 "lexic.l"
 
 
-#line 530 "lex.yy.c"
+#line 541 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -611,7 +622,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 18 "lexic.l"
+#line 29 "lexic.l"
 {
 					BeginToken(yytext);
                     yylval.value = atof(yytext);
@@ -620,7 +631,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 24 "lexic.l"
+#line 35 "lexic.l"
 {
 					BeginToken(yytext);
                     yylval.literal = *yytext;
@@ -629,7 +640,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 31 "lexic.l"
+#line 42 "lexic.l"
 {
 					BeginToken(yytext);
                     return *yytext; 
@@ -637,14 +648,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 36 "lexic.l"
+#line 47 "lexic.l"
 {	
 					BeginToken(yytext);
 				}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 40 "lexic.l"
+#line 51 "lexic.l"
 {
 					BeginToken(yytext);
                     return yytext[0];
@@ -652,10 +663,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 45 "lexic.l"
+#line 56 "lexic.l"
 ECHO;
 	YY_BREAK
-#line 659 "lex.yy.c"
+#line 670 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1515,7 +1526,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 45 "lexic.l"
+#line 56 "lexic.l"
 
 int yywrap(void)
 {
