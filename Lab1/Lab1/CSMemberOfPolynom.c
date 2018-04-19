@@ -124,14 +124,19 @@ void printMember(struct SMemberOfPolynom* in)
 		printf("-");
 	else if (in->coefficient != 1)
 		printf("%0.0f", in->coefficient);
-
-	while (in->literals[i])
+	if (in->numLiter != 0) 
 	{
-		printf("%c", in->literals[i]);
-		if (in->powers[i] > 1)
+		while (in->literals[i])
 		{
-			printf("^%0.0f", in->powers[i]);
+			printf("%c", in->literals[i]);
+			if (in->powers[i] > 1)
+			{
+				printf("^%0.0f", in->powers[i]);
+			}
+			i++;
 		}
-		i++;
+	} else if (in->coefficient == 1)
+	{
+		printf("1");
 	}
 }
