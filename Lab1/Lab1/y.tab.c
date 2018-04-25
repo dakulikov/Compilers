@@ -1378,7 +1378,7 @@ yyreduce:
 											{
 												if (findExpression((yyvsp[-2].polynomsExpression)->arrayOfPolynomsMembersPtr[i]->literals[0]))
 												{
-													struct SExpressionOfPolynom* temp2=copyExpression(findExpression((yyvsp[-2].polynomsExpression)->arrayOfPolynomsMembersPtr[i]->literals[0]));
+													struct SExpressionOfPolynom* temp2=copyExpression(findExpression((yyvsp[-2].polynomsExpression)->arrayOfPolynomsMembersPtr[i]->literals[j]));
 													temp1=mulExpressions(temp1,temp2);
 												}
 											}

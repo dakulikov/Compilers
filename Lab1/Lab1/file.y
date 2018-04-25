@@ -70,7 +70,7 @@ program:
 											{
 												if (findExpression($2->arrayOfPolynomsMembersPtr[i]->literals[0]))
 												{
-													struct SExpressionOfPolynom* temp2=copyExpression(findExpression($2->arrayOfPolynomsMembersPtr[i]->literals[0]));
+													struct SExpressionOfPolynom* temp2=copyExpression(findExpression($2->arrayOfPolynomsMembersPtr[i]->literals[j]));
 													temp1=mulExpressions(temp1,temp2);
 												}
 											}

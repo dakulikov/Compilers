@@ -31,18 +31,11 @@ void initMemberOfPolynom(struct SMemberOfPolynom* in,char liter,double constant)
 	}
 	printf("\n");
 }
-struct SMemberOfPolynom * powPolyMember(struct SMemberOfPolynom* in, double power, YYLTYPE *bloc)
+struct SMemberOfPolynom * powPolyMember(struct SMemberOfPolynom* in, double power)
 {
 	printf("POW MEMBER ");
 	printMember(in);
 	printf("^%0.0f = ",power);
-
-	if (in->coefficient == 0.0 && power == 0.0) 
-	{
-		 PrintError("Indeterminate 0^0! Line %d:c%d to %d:c%d",
-                        bloc->first_line, bloc->first_column,
-                        bloc->last_line, bloc->last_column);
-	}
 
 	if (in->brackets == 0)
 	{

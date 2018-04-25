@@ -3,3 +3,10 @@ Debug/
 .vs/
 *.vcxproj*
 *.sln
+y.tab.c
+t.tab.h
+y_tab.c
+t_tab.h
+lex.yy.c
+!bison.exe
+!flex.exe

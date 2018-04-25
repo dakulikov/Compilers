@@ -1,6 +1,8 @@
 #pragma once
+#ifndef SEXPRESSIONOFPOLYNOM_H
+#define SEXPRESSIONOFPOLYNOM_H
+
 #include "SMemberOfPolynom.h"
-#include "y.tab.h"
 struct SExpressionOfPolynom
 {
 	struct SMemberOfPolynom** arrayOfPolynomsMembersPtr;
@@ -16,3 +18,5 @@ void addExpression(struct SExpressionOfPolynom* first, struct SExpressionOfPolyn
 struct SExpressionOfPolynom* mulExpressions(struct SExpressionOfPolynom* first, struct SExpressionOfPolynom* second);
 struct SExpressionOfPolynom* copyExpression(struct SExpressionOfPolynom* in);
 struct SExpressionOfPolynom *negateExpression(struct SExpressionOfPolynom* ex);
+
+#endif // !SEXPRESSIONOFPOLYNOM_H
